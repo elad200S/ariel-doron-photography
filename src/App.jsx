@@ -171,18 +171,52 @@ function MarqueeVideoTile({ src, viewportRef }) {
       loop
       playsInline
       preload="metadata"
-      className="h-full aspect-square flex-shrink-0 object-cover"
+      className="h-full aspect-square max-w-none flex-shrink-0 object-cover"
     />
   );
 }
 
 function MobileHeroCarousel() {
   const viewportRef = useRef(null);
+  const trackRef = useRef(null);
+  const offsetRef = useRef(0);
   const tiles = [...heroVideos, ...heroVideos];
+
+  useEffect(() => {
+    let frameId;
+    const speed = 60; // px per second, left-to-right
+
+    const tileWidth = () => viewportRef.current?.clientHeight || 0;
+    const halfWidth = () => tileWidth() * heroVideos.length;
+
+    offsetRef.current = -halfWidth();
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translateX(${offsetRef.current}px)`;
+    }
+
+    let last = performance.now();
+    function step(now) {
+      const dt = (now - last) / 1000;
+      last = now;
+      const half = halfWidth();
+      if (half > 0) {
+        offsetRef.current += speed * dt;
+        if (offsetRef.current >= 0) {
+          offsetRef.current = -half;
+        }
+        if (trackRef.current) {
+          trackRef.current.style.transform = `translateX(${offsetRef.current}px)`;
+        }
+      }
+      frameId = requestAnimationFrame(step);
+    }
+    frameId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frameId);
+  }, []);
 
   return (
     <div ref={viewportRef} className="flex md:hidden h-full overflow-hidden">
-      <div className="flex h-full animate-marquee">
+      <div ref={trackRef} className="flex h-full w-max">
         {tiles.map((src, i) => (
           <MarqueeVideoTile key={`${src}-${i}`} src={src} viewportRef={viewportRef} />
         ))}

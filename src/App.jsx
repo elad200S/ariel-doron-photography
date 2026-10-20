@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const PHONE_DISPLAY = "050-123-4567";
 const PHONE_TEL = "tel:0501234567";
@@ -125,6 +125,39 @@ function Header() {
   );
 }
 
+function MobileHeroCarousel() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % heroVideos.length);
+    }, 6000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="flex md:hidden h-full">
+      <video
+        key={heroVideos[index]}
+        src={heroVideos[index]}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="h-full w-full object-cover"
+      />
+      <div className="absolute bottom-4 inset-x-0 flex justify-center gap-2">
+        {heroVideos.map((src, i) => (
+          <span
+            key={src}
+            className={`w-2 h-2 rounded-full ${i === index ? "bg-white" : "bg-white/40"}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Hero() {
   return (
     <section id="top" className="relative h-[90vh] min-h-[560px] overflow-hidden">
@@ -142,20 +175,8 @@ function Hero() {
           />
         ))}
       </div>
-      {/* Mobile: swipeable carousel, one video at a time */}
-      <div className="flex md:hidden h-full overflow-x-auto snap-x snap-mandatory no-scrollbar">
-        {heroVideos.map((src) => (
-          <video
-            key={src}
-            src={src}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="h-full w-full flex-shrink-0 snap-center object-cover"
-          />
-        ))}
-      </div>
+      {/* Mobile: auto-advancing carousel, all videos rotate through */}
+      <MobileHeroCarousel />
       <div className="absolute inset-0 bg-brown/35" />
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-7 text-center text-white px-8">
         <img src="/images/logo-white.png" alt="אריאל דורון" className="w-64 md:w-80" />

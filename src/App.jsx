@@ -97,7 +97,11 @@ function Header() {
         <div className="flex items-center gap-6">
           <nav className="hidden md:flex gap-8 text-sm font-medium">
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="hover:text-terracotta transition-colors">
+              <a
+                key={link.href}
+                href={link.href}
+                className="uppercase tracking-[0.15em] text-xs font-semibold hover:text-accent transition-colors"
+              >
                 {link.label}
               </a>
             ))}
@@ -106,7 +110,7 @@ function Header() {
           <a
             href={PHONE_TEL}
             dir="ltr"
-            className="flex items-center gap-2 bg-terracotta text-white px-4 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity"
+            className="flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity"
           >
             <PhoneIcon />
             <span className="hidden sm:inline">{PHONE_DISPLAY}</span>
@@ -124,13 +128,13 @@ function Header() {
       </div>
 
       {menuOpen && (
-        <nav className="md:hidden flex flex-col items-end gap-4 px-6 pb-5 text-sm font-medium">
+        <nav className="md:hidden flex flex-col items-end gap-4 px-6 pb-5">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="hover:text-terracotta transition-colors"
+              className="uppercase tracking-[0.15em] text-xs font-semibold hover:text-accent transition-colors"
             >
               {link.label}
             </a>
@@ -178,7 +182,7 @@ function Hero() {
         <p className="text-xl md:text-2xl">מצלם רגעים, לא רק תמונות</p>
         <a
           href="#contact"
-          className="mt-2 px-8 py-3.5 rounded-lg bg-terracotta text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+          className="mt-2 px-8 py-3.5 rounded-lg bg-accent text-white text-sm font-semibold hover:opacity-90 transition-opacity"
         >
           צור קשר
         </a>
@@ -221,7 +225,7 @@ function About() {
           צלם ווידאוגרף אירועים, עם התמחות בצילום רחפן ותיעוד רגעים טקסיים ותרבותיים.
           כל אירוע מספר סיפור - אני כאן לתעד אותו.
         </p>
-        <a href="#about" className="text-terracotta font-semibold">
+        <a href="#about" className="text-accent font-semibold">
           קרא עוד ←
         </a>
       </div>
@@ -238,7 +242,7 @@ function Gallery() {
           <img key={src} src={src} alt="" className="w-[300px] h-[220px] object-cover rounded-[10px]" />
         ))}
       </div>
-      <a href="#gallery" className="text-terracotta font-semibold">
+      <a href="#gallery" className="text-accent font-semibold">
         לכל הגלריה ←
       </a>
     </section>
@@ -276,7 +280,7 @@ function ContactForm() {
   }
 
   const inputClass =
-    "bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:border-terracotta transition-colors";
+    "bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:border-accent transition-colors";
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-md flex flex-col gap-3 text-right">
@@ -287,7 +291,7 @@ function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="px-8 py-3.5 rounded-lg bg-terracotta text-white text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-60"
+        className="px-8 py-3.5 rounded-lg bg-accent text-white text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-60"
       >
         {status === "submitting" ? "שולח..." : "שלחו פרטים"}
       </button>
@@ -315,7 +319,7 @@ function Footer() {
         <div className="flex flex-col items-center md:items-end gap-3 text-center md:text-right">
           <h3 className="font-semibold text-white mb-1">קישורים מהירים</h3>
           {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="text-white/70 hover:text-terracotta transition-colors">
+            <a key={link.href} href={link.href} className="text-white/70 hover:text-accent transition-colors">
               {link.label}
             </a>
           ))}
@@ -323,18 +327,18 @@ function Footer() {
 
         <div className="flex flex-col items-center md:items-end gap-3 text-center md:text-right">
           <h3 className="font-semibold text-white mb-1">יצירת קשר</h3>
-          <a href={PHONE_TEL} dir="ltr" className="text-white/70 hover:text-terracotta transition-colors flex items-center gap-2">
+          <a href={PHONE_TEL} dir="ltr" className="text-white/70 hover:text-accent transition-colors flex items-center gap-2">
             <PhoneIcon />
             {PHONE_DISPLAY}
           </a>
-          <a href={`mailto:${EMAIL}`} className="text-white/70 hover:text-terracotta transition-colors">
+          <a href={`mailto:${EMAIL}`} className="text-white/70 hover:text-accent transition-colors">
             {EMAIL}
           </a>
           <a
             href={INSTAGRAM_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white/70 hover:text-terracotta transition-colors flex items-center gap-2"
+            className="text-white/70 hover:text-accent transition-colors flex items-center gap-2"
           >
             <InstagramIcon />
             אינסטגרם

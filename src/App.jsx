@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const PHONE_DISPLAY = "050-123-4567";
 const PHONE_TEL = "tel:0501234567";
@@ -126,31 +126,20 @@ function Header() {
 }
 
 function MobileHeroCarousel() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % heroVideos.length);
-    }, 6000);
-    return () => clearInterval(id);
-  }, []);
+  const tiles = [...heroVideos, ...heroVideos];
 
   return (
-    <div className="flex md:hidden h-full">
-      <video
-        key={heroVideos[index]}
-        src={heroVideos[index]}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="h-full w-full object-cover"
-      />
-      <div className="absolute bottom-4 inset-x-0 flex justify-center gap-2">
-        {heroVideos.map((src, i) => (
-          <span
-            key={src}
-            className={`w-2 h-2 rounded-full ${i === index ? "bg-white" : "bg-white/40"}`}
+    <div className="flex md:hidden h-full overflow-hidden">
+      <div className="flex h-full animate-marquee">
+        {tiles.map((src, i) => (
+          <video
+            key={`${src}-${i}`}
+            src={src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="h-full aspect-square flex-shrink-0 object-cover"
           />
         ))}
       </div>

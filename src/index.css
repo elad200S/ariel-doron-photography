@@ -18,3 +18,17 @@ body {
   color: var(--color-brown);
   direction: rtl;
 }
+
+@keyframes marquee-ltr {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee {
+  width: max-content;
+  animation: marquee-ltr 24s linear infinite;
+}

@@ -45,7 +45,7 @@ const heroVideos = [
 
 function Hero() {
   return (
-    <section id="top" className="relative h-[90vh] min-h-[560px] overflow-hidden grid grid-cols-2 grid-rows-3 md:grid-cols-3 md:grid-rows-2">
+    <section id="top" className="relative h-[90vh] min-h-[560px] overflow-hidden flex flex-col">
       {heroVideos.map((src) => (
         <video
           key={src}
@@ -54,7 +54,7 @@ function Hero() {
           muted
           loop
           playsInline
-          className="w-full h-full object-cover"
+          className="w-full flex-1 min-h-0 object-cover"
         />
       ))}
       <div className="absolute inset-0 bg-brown/35" />

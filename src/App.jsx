@@ -141,36 +141,15 @@ function Header() {
   );
 }
 
-function MarqueeVideoTile({ src, viewportRef }) {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    const root = viewportRef.current;
-    if (!video || !root) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
-      },
-      { root, threshold: 0.15 }
-    );
-    observer.observe(video);
-    return () => observer.disconnect();
-  }, [viewportRef]);
-
+function MarqueeVideoTile({ src }) {
   return (
     <video
-      ref={videoRef}
       src={src}
+      autoPlay
       muted
       loop
       playsInline
-      preload="metadata"
+      preload="auto"
       className="h-full aspect-square max-w-none flex-shrink-0 object-cover"
     />
   );
@@ -218,7 +197,7 @@ function MobileHeroCarousel() {
     <div ref={viewportRef} className="flex md:hidden h-full overflow-hidden">
       <div ref={trackRef} className="flex h-full w-max">
         {tiles.map((src, i) => (
-          <MarqueeVideoTile key={`${src}-${i}`} src={src} viewportRef={viewportRef} />
+          <MarqueeVideoTile key={`${src}-${i}`} src={src} />
         ))}
       </div>
     </div>

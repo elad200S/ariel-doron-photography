@@ -34,10 +34,19 @@ function Header() {
   );
 }
 
+const heroVideos = [
+  "/videos/video-1.mp4",
+  "/videos/video-2.mp4",
+  "/videos/video-3.mp4",
+  "/videos/video-4.mp4",
+  "/videos/video-5.mp4",
+  "/videos/video-6.mp4",
+];
+
 function Hero() {
   return (
-    <section id="top" className="relative h-[90vh] min-h-[560px] flex overflow-hidden">
-      {["/videos/video-1.mp4", "/videos/video-2.mp4"].map((src) => (
+    <section id="top" className="relative h-[90vh] min-h-[560px] overflow-hidden grid grid-cols-2 grid-rows-3 md:grid-cols-3 md:grid-rows-2">
+      {heroVideos.map((src) => (
         <video
           key={src}
           src={src}
@@ -45,7 +54,7 @@ function Hero() {
           muted
           loop
           playsInline
-          className="flex-1 w-1/2 h-full object-cover"
+          className="w-full h-full object-cover"
         />
       ))}
       <div className="absolute inset-0 bg-brown/35" />

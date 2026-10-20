@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 
 const PHONE_DISPLAY = "050-123-4567";
 const PHONE_TEL = "tel:0501234567";
@@ -141,69 +141,6 @@ function Header() {
   );
 }
 
-function MarqueeVideoTile({ src }) {
-  return (
-    <video
-      src={src}
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="auto"
-      className="h-full aspect-square max-w-none flex-shrink-0 object-cover"
-    />
-  );
-}
-
-function MobileHeroCarousel() {
-  const viewportRef = useRef(null);
-  const trackRef = useRef(null);
-  const offsetRef = useRef(0);
-  const tiles = [...heroVideos, ...heroVideos];
-
-  useEffect(() => {
-    let frameId;
-    const speed = 60; // px per second, left-to-right
-
-    const tileWidth = () => viewportRef.current?.clientHeight || 0;
-    const halfWidth = () => tileWidth() * heroVideos.length;
-
-    offsetRef.current = -halfWidth();
-    if (trackRef.current) {
-      trackRef.current.style.transform = `translateX(${offsetRef.current}px)`;
-    }
-
-    let last = performance.now();
-    function step(now) {
-      const dt = (now - last) / 1000;
-      last = now;
-      const half = halfWidth();
-      if (half > 0) {
-        offsetRef.current += speed * dt;
-        if (offsetRef.current >= 0) {
-          offsetRef.current = -half;
-        }
-        if (trackRef.current) {
-          trackRef.current.style.transform = `translateX(${offsetRef.current}px)`;
-        }
-      }
-      frameId = requestAnimationFrame(step);
-    }
-    frameId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(frameId);
-  }, []);
-
-  return (
-    <div ref={viewportRef} className="flex md:hidden h-full overflow-hidden">
-      <div ref={trackRef} className="flex h-full w-max">
-        {tiles.map((src, i) => (
-          <MarqueeVideoTile key={`${src}-${i}`} src={src} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function Hero() {
   return (
     <section id="top" className="relative h-[90vh] min-h-[560px] overflow-hidden">
@@ -221,8 +158,20 @@ function Hero() {
           />
         ))}
       </div>
-      {/* Mobile: auto-advancing carousel, all videos rotate through */}
-      <MobileHeroCarousel />
+      {/* Mobile: static grid of video squares */}
+      <div className="grid grid-cols-2 grid-rows-3 md:hidden h-full">
+        {heroVideos.map((src) => (
+          <video
+            key={src}
+            src={src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          />
+        ))}
+      </div>
       <div className="absolute inset-0 bg-brown/35" />
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-7 text-center text-white px-8">
         <img src="/images/logo-white.png" alt="אריאל דורון" className="w-64 md:w-80" />

@@ -3,6 +3,12 @@ import { useState } from "react";
 const PHONE_DISPLAY = "050-123-4567";
 const PHONE_TEL = "tel:0501234567";
 const WHATSAPP_LINK = "https://wa.me/972501234567";
+const EMAIL = "info@arieldoron.com";
+const INSTAGRAM_LINK = "https://www.instagram.com/ariel_doron.nt";
+
+// כתובת ה-Web App של Google Apps Script שתקבל את הטופס, תוסיף שורה לגוגל שיטס
+// ותשלח התראה למייל. אחרי שתגדירו את זה, הדביקו כאן את ה-URL שתקבלו מהפריסה.
+const FORM_ENDPOINT = "";
 
 const navLinks = [
   { label: "בית", href: "#top" },
@@ -52,6 +58,16 @@ function WhatsAppIcon() {
         d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.1 0-.3 0-.4 0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.2 1.6 2.5 4 3.5.6.2 1 .4 1.3.5.6.2 1.1.1 1.5-.1.5-.2 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.4-.3Z"
         fill="white"
       />
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
     </svg>
   );
 }
@@ -239,17 +255,106 @@ function Gallery() {
   );
 }
 
+function ContactForm() {
+  const [status, setStatus] = useState("idle"); // idle | submitting | sent
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+
+    if (!FORM_ENDPOINT) {
+      setStatus("sent");
+      return;
+    }
+
+    setStatus("submitting");
+    try {
+      await fetch(FORM_ENDPOINT, { method: "POST", body: data });
+      setStatus("sent");
+      e.currentTarget.reset();
+    } catch {
+      setStatus("idle");
+    }
+  }
+
+  if (status === "sent") {
+    return (
+      <p className="bg-white/10 rounded-xl px-6 py-5 text-center max-w-md">
+        תודה! הפרטים התקבלו ואחזור אליכם בהקדם.
+      </p>
+    );
+  }
+
+  const inputClass =
+    "bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:border-terracotta transition-colors";
+
+  return (
+    <form onSubmit={handleSubmit} className="w-full max-w-md flex flex-col gap-3 text-right">
+      <input name="name" type="text" placeholder="שם מלא" required className={inputClass} />
+      <input name="phone" type="tel" placeholder="טלפון" required className={inputClass} />
+      <input name="email" type="email" placeholder="אימייל (לא חובה)" className={inputClass} />
+      <textarea name="message" rows="3" placeholder="ספרו לי קצת על האירוע..." className={inputClass} />
+      <button
+        type="submit"
+        disabled={status === "submitting"}
+        className="px-8 py-3.5 rounded-lg bg-terracotta text-white text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-60"
+      >
+        {status === "submitting" ? "שולח..." : "שלחו פרטים"}
+      </button>
+    </form>
+  );
+}
+
 function Footer() {
   return (
-    <footer id="contact" className="bg-brown text-white py-20 px-8 flex flex-col items-center gap-5 text-center">
-      <h2 className="text-3xl font-bold">מתכננים אירוע?</h2>
-      <p>בואו נדבר ונתכנן את התיעוד המושלם לרגע שלכם</p>
-      <a
-        href="mailto:info@arieldoron.com"
-        className="px-8 py-3.5 rounded-lg bg-terracotta text-white text-sm font-semibold hover:opacity-90 transition-opacity"
-      >
-        שלחו הודעה
-      </a>
+    <footer id="contact" className="bg-brown text-white">
+      <div className="py-20 px-8 flex flex-col items-center gap-6 text-center">
+        <h2 className="text-3xl font-bold">מתכננים אירוע?</h2>
+        <p>השאירו פרטים ואחזור אליכם לתיאום הצילום</p>
+        <ContactForm />
+      </div>
+
+      <div className="border-t border-white/10 px-8 md:px-16 py-14 grid grid-cols-1 md:grid-cols-3 gap-10 text-sm">
+        <div className="flex flex-col items-center md:items-end gap-4 text-center md:text-right">
+          <img src="/images/logo-badge.png" alt="אריאל דורון" className="h-16 w-16 rounded-xl object-cover" />
+          <p className="text-white/70 leading-relaxed">
+            צלם ווידאוגרף אירועים - הריון, השנים הראשונות, חתונות ואווירה. כל אירוע מספר סיפור, אני כאן לתעד אותו.
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center md:items-end gap-3 text-center md:text-right">
+          <h3 className="font-semibold text-white mb-1">קישורים מהירים</h3>
+          {navLinks.map((link) => (
+            <a key={link.href} href={link.href} className="text-white/70 hover:text-terracotta transition-colors">
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        <div className="flex flex-col items-center md:items-end gap-3 text-center md:text-right">
+          <h3 className="font-semibold text-white mb-1">יצירת קשר</h3>
+          <a href={PHONE_TEL} dir="ltr" className="text-white/70 hover:text-terracotta transition-colors flex items-center gap-2">
+            <PhoneIcon />
+            {PHONE_DISPLAY}
+          </a>
+          <a href={`mailto:${EMAIL}`} className="text-white/70 hover:text-terracotta transition-colors">
+            {EMAIL}
+          </a>
+          <a
+            href={INSTAGRAM_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white/70 hover:text-terracotta transition-colors flex items-center gap-2"
+          >
+            <InstagramIcon />
+            אינסטגרם
+          </a>
+        </div>
+      </div>
+
+      <div className="border-t border-white/10 px-8 py-6 text-center text-xs text-white/50">
+        © {new Date().getFullYear()} אריאל דורון. כל הזכויות שמורות.
+      </div>
     </footer>
   );
 }

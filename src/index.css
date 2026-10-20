@@ -17,6 +17,9 @@ body {
   background-color: var(--color-cream);
   color: var(--color-brown);
   direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 @keyframes marquee-ltr {

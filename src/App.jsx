@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const PHONE_DISPLAY = "050-123-4567";
 const PHONE_TEL = "tel:0501234567";
@@ -141,22 +141,50 @@ function Header() {
   );
 }
 
+function MarqueeVideoTile({ src, viewportRef }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const root = viewportRef.current;
+    if (!video || !root) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { root, threshold: 0.15 }
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [viewportRef]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      className="h-full aspect-square flex-shrink-0 object-cover"
+    />
+  );
+}
+
 function MobileHeroCarousel() {
+  const viewportRef = useRef(null);
   const tiles = [...heroVideos, ...heroVideos];
 
   return (
-    <div className="flex md:hidden h-full overflow-hidden">
+    <div ref={viewportRef} className="flex md:hidden h-full overflow-hidden">
       <div className="flex h-full animate-marquee">
         {tiles.map((src, i) => (
-          <video
-            key={`${src}-${i}`}
-            src={src}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="h-full aspect-square flex-shrink-0 object-cover"
-          />
+          <MarqueeVideoTile key={`${src}-${i}`} src={src} viewportRef={viewportRef} />
         ))}
       </div>
     </div>

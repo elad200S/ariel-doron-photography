@@ -36,28 +36,29 @@ function Header() {
 
 function Hero() {
   return (
-    <section id="top" className="bg-cream py-24 px-8 flex flex-col items-center gap-7 text-center">
-      <h1 className="text-4xl md:text-5xl font-bold">אריאל דורון</h1>
-      <p className="text-xl">מצלם רגעים, לא רק תמונות</p>
-      <div className="flex flex-col sm:flex-row gap-6">
-        {["/videos/video-1.mp4", "/videos/video-2.mp4"].map((src) => (
-          <video
-            key={src}
-            src={src}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-[260px] h-[445px] object-cover rounded-2xl shadow-lg"
-          />
-        ))}
+    <section id="top" className="relative h-[90vh] min-h-[560px] flex overflow-hidden">
+      {["/videos/video-1.mp4", "/videos/video-2.mp4"].map((src) => (
+        <video
+          key={src}
+          src={src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="flex-1 w-1/2 h-full object-cover"
+        />
+      ))}
+      <div className="absolute inset-0 bg-brown/35" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-7 text-center text-white px-8">
+        <h1 className="text-4xl md:text-6xl font-bold">אריאל דורון</h1>
+        <p className="text-xl md:text-2xl">מצלם רגעים, לא רק תמונות</p>
+        <a
+          href="#contact"
+          className="mt-2 px-8 py-3.5 rounded-lg bg-terracotta text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+        >
+          צור קשר
+        </a>
       </div>
-      <a
-        href="#contact"
-        className="mt-2 px-8 py-3.5 rounded-lg bg-brown text-white text-sm font-semibold hover:bg-terracotta transition-colors"
-      >
-        צור קשר
-      </a>
     </section>
   );
 }

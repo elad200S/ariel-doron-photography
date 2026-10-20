@@ -18,3 +18,12 @@ body {
   color: var(--color-brown);
   direction: rtl;
 }
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

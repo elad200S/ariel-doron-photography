@@ -73,18 +73,35 @@ const heroVideos = [
 
 function Hero() {
   return (
-    <section id="top" className="relative h-[90vh] min-h-[560px] overflow-hidden flex flex-row">
-      {heroVideos.map((src) => (
-        <video
-          key={src}
-          src={src}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="h-full flex-1 min-w-0 object-cover"
-        />
-      ))}
+    <section id="top" className="relative h-[90vh] min-h-[560px] overflow-hidden">
+      {/* Desktop: all videos side by side */}
+      <div className="hidden md:flex h-full">
+        {heroVideos.map((src) => (
+          <video
+            key={src}
+            src={src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="h-full flex-1 min-w-0 object-cover"
+          />
+        ))}
+      </div>
+      {/* Mobile: swipeable carousel, one video at a time */}
+      <div className="flex md:hidden h-full overflow-x-auto snap-x snap-mandatory no-scrollbar">
+        {heroVideos.map((src) => (
+          <video
+            key={src}
+            src={src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="h-full w-full flex-shrink-0 snap-center object-cover"
+          />
+        ))}
+      </div>
       <div className="absolute inset-0 bg-brown/35" />
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-7 text-center text-white px-8">
         <h1 className="text-4xl md:text-6xl font-bold">אריאל דורון</h1>

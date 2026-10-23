@@ -128,7 +128,7 @@ function Header() {
       </div>
 
       {menuOpen && (
-        <nav className="md:hidden flex flex-col items-end gap-4 px-6 pb-5">
+        <nav className="md:hidden flex flex-col items-start gap-4 px-6 pb-5">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -309,14 +309,14 @@ function Footer() {
       </div>
 
       <div className="border-t border-white/10 px-8 md:px-16 py-14 grid grid-cols-1 md:grid-cols-3 gap-10 text-sm">
-        <div className="flex flex-col items-center md:items-end gap-4 text-center md:text-right">
+        <div className="flex flex-col items-center md:items-start gap-4 text-center md:text-right">
           <img src="/images/logo-badge.png" alt="אריאל דורון" className="h-16 w-16 rounded-xl object-cover" />
           <p className="text-white/70 leading-relaxed">
             צלם ווידאוגרף אירועים - הריון, השנים הראשונות, חתונות ואווירה. כל אירוע מספר סיפור, אני כאן לתעד אותו.
           </p>
         </div>
 
-        <div className="flex flex-col items-center md:items-end gap-3 text-center md:text-right">
+        <div className="flex flex-col items-center md:items-start gap-3 text-center md:text-right">
           <h3 className="font-semibold text-white mb-1">קישורים מהירים</h3>
           {navLinks.map((link) => (
             <a key={link.href} href={link.href} className="text-white/70 hover:text-accent transition-colors">
@@ -325,7 +325,7 @@ function Footer() {
           ))}
         </div>
 
-        <div className="flex flex-col items-center md:items-end gap-3 text-center md:text-right">
+        <div className="flex flex-col items-center md:items-start gap-3 text-center md:text-right">
           <h3 className="font-semibold text-white mb-1">יצירת קשר</h3>
           <a href={PHONE_TEL} dir="ltr" className="text-white/70 hover:text-accent transition-colors flex items-center gap-2">
             <PhoneIcon />

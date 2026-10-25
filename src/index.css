@@ -1,10 +1,10 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Noto+Serif+Hebrew:wght@500;600;700&family=Montserrat:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@400;500;600;700;800;900&display=swap");
 
 @theme {
-  --color-cream: #f7f0e5;
-  --color-brown: #3a2c25;
-  --color-accent: #b8945a;
+  --color-cream: #ececea;
+  --color-brown: #161513;
+  --color-accent: #e2503a;
 }
 
 html {
@@ -24,7 +24,8 @@ body {
 h1,
 h2,
 h3 {
-  font-family: "Playfair Display", "Noto Serif Hebrew", serif;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
+  font-family: "Rubik", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
 }
